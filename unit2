@@ -1,0 +1,49 @@
+Problema
+
+- initial state
+- action (s) --> {a1,a2,a3 ...}
+- result (s,a) -> s'
+- goal test (s) --? t| f
+- path cost (s-a> s -a> s) --> n ()
+    step cost(a,s,s') -> n
+
+-->
+Frontier
+Explorer
+unexplored
+
+fnction tree search(problem):
+
+frontier= {[initial]}
+
+loop:
+  if frontier es emplt: return FAIL
+  path = remove_choice(frontier)
+  s = path.end
+  if s s id a goal : retun path
+  form a in actions:
+	add [path + a -> result (s,a)]	to frontier
+
+breadth-first search
+
+elije el camino de la forntera que nunca se ha elejido, lo cuale s consierado como la ruta más corta
+ 
+fnction grap  search(problem):
+
+frontier= {[initial]}; explored = {}
+
+loop:
+  if frontier es emplt: return FAIL
+  path = remove_choice(frontier)
+  s = path.end  ; add s to explored
+  if s s id a goal : retun path
+  form a in actions:
+	add [path + a -> result (s,a)]	to frontier
+        unless result(s,a) im frontier  or explored
+ A*Serach
+f = g+h
+g(path ) = path cost
+h()path = h(s) = estimate dostance to the goal
+A Note On Implementation
+
+Our description of the algorithm has talked about paths in the state space. I want to say a little bit now about how to implement that in terms of a computer algorithm. We talk about paths, but we want to implement that in some ways. In the implementation we talk about nodes. A node is a data structure, and it has four fields. The state field indicates the state at the end of the path. The action was the action it took to get there. The cost is the total cost, and the parent is a pointer to another node. In this case, the node that has state "S", and it will have a parent which points to the node that has state "A", and that will have a parent pointer that's null. So we have a linked list of nodes representing the path. We'll use the word "path" for the abstract idea, and the word "node" for the representation in the computer memory. But otherwise, you can think of those two terms as being synonyms, because they're in a one-to-one correspondence. Now there are two main data structures that deal with nodes. We have the "frontier" and we have the "explored" list. Let's talk about how to implement them. In the frontier the operations we have to deal with are removing the best item from the frontier and adding in new ones. And that suggests we should implement it as a priority queue, which knows how to keep track of the best items in proper order. But we also need to have an additional operation of a membership test as a new item in the frontier. And that suggests representing it as a set, which can be built from a hash table or a tree. So the most efficient implementations of search actually have both representations. The explored set, on the other hand, is easier. All we have to do there is be able to add new members and check for membership. So we represent that as a single set, which again can be done with either a hash table or tree.
